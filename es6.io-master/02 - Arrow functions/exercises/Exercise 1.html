@@ -32,13 +32,28 @@
 <script type="text/javascript">
 
   // Select all the list items on the page and convert to array
-    let listItem = document.getElementsByTagName('li')
-    let listItemArray = Array.from(listItem)
-    console.log('listItemArray', listItemArray);
+  const videoList = Array.from(document.querySelectorAll('li[data-time]'))
+  console.log(videoList);
   // Filter for only the elements that contain the word 'flexbox'
-    listItemArray.forEach(listItem => console.log(listItem.innerHTML))
+  const filtered = videoList
+    .filter(flexbox => flexbox.textContent.includes('Flexbox'))
+    .map(item => item.dataset.time)
+    .map(timecode => {
+      const parts = timecode.split(':').map(part => parseFloat(part));
+      return (parts[0] * 60) + parts[1];
+    })
+    .reduce((runningTotal, seconds) => runningTotal + seconds, 0)
+    console.log(filtered);
   // map down to a list of time strings
-
+  const reduxFiltered = videoList
+    .filter(redux => redux.textContent.includes('Redux'))
+    .map(item => item.dataset.time)
+    .map(ciao => {
+      const parts = ciao.split(':').map(part => parseFloat(part));
+      return (parts[0]*60) + parts[1];
+    })
+    .reduce((tempoTotale, secondi) => tempoTotale + secondi, 0)
+    console.log(reduxFiltered);
   // map to an array of seconds
 
   // reduce to get total
